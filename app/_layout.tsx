@@ -1,32 +1,43 @@
-import MainHeader from "@/components/MainHeader";
-import AppText from "@/components/typography/AppText";
-
+import { useEffect } from "react";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack, useRouter } from "expo-router";
-import { useEffect } from "react";
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-  useColorScheme,
-} from "react-native";
+import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
+import * as SecureStore from "expo-secure-store";
+import { Ionicons } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native-gesture-handler";
+
 SplashScreen.preventAutoHideAsync();
 
+const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
+
 export const unstable_settings = {
-  initialRouteName: "Trips",
+  initialRouteName: "(tabs)",
 };
 
+const tokenCache = {
+  async getToken(key: string) {
+    try {
+      return SecureStore.getItemAsync(key);
+    } catch (err) {
+      return null;
+    }
+  },
+  async saveToken(key: string, value: string) {
+    try {
+      return SecureStore.setItemAsync(key, value);
+    } catch (err) {
+      return;
+    }
+  },
+};
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    oxygenLight: require("../assets/fonts/Oxygen-Light.ttf"),
-    oxygenRegular: require("../assets/fonts/Oxygen-Regular.ttf"),
-    oxygenBold: require("../assets/fonts/Oxygen-Bold.ttf"),
+    MontserratLight: require("../assets/fonts/Montserrat-Light.ttf"),
+    MontserratRegular: require("../assets/fonts/Montserrat-Regular.ttf"),
+    MontserratBold: require("../assets/fonts/Montserrat-SemiBold.ttf"),
   });
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
     if (error) throw error;
   }, [error]);
@@ -41,18 +52,44 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return (
+    <ClerkProvider
+      publishableKey={CLERK_PUBLISHABLE_KEY!}
+      tokenCache={tokenCache}
+    >
+      <RootLayoutNav />
+    </ClerkProvider>
+  );
 }
 
 function RootLayoutNav() {
   const router = useRouter();
+  const { isLoaded, isSignedIn } = useAuth();
 
   useEffect(() => {
-    router.replace("/(tabs)/home");
-  }, []);
+    if (isLoaded && !isSignedIn) router.push("/(modals)/login");
+    // else router.replace("/(tabs)/index");
+  }, [isLoaded]);
 
   return (
     <Stack>
+      <Stack.Screen
+        name="(modals)/login"
+        options={{
+          presentation: "modal",
+          headerShadowVisible: false,
+          headerTitle: "login",
+          headerTitleStyle: {
+            fontFamily: "MontserratRegular",
+          },
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => router.back()}>
+              <Ionicons name="close" size={25} />
+            </TouchableOpacity>
+          ),
+        }}
+      />
+
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
     </Stack>
   );

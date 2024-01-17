@@ -7,6 +7,12 @@ module.exports = {
     "./app/*.{js,jsx,ts,tsx}",
     "./<custom directory>/**/*.{js,jsx,ts,tsx}",
   ],
-  theme: {},
+  theme: {
+    extend: {
+      colors: {
+        primary: "#FF385C",
+      },
+    },
+  },
   plugins: [require("@tailwindcss/line-clamp")],
 };

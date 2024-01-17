@@ -68,9 +68,9 @@ const MainHeader = () => {
         {categories.map((category, index) => {
           return (
             <TouchableOpacity
-              className={`items-center py-2 border-b-2 border-transparent  ${
-                activeIndex === index && "border-black"
-              }`}
+              className={`items-center py-2 border-b-2 ${
+                activeIndex === index ? "border-black" : "border-transparent"
+              } `}
               onPress={() => setActiveIndex(index)}
               key={index}
             >
@@ -82,7 +82,7 @@ const MainHeader = () => {
 
               <AppText
                 classNames={` ${
-                  activeIndex === index ? "text-black" : "text-[color-[#707070]"
+                  activeIndex === index ? "text-black" : "text-[#707070]"
                 }`}
               >
                 {category.name}

@@ -23,12 +23,12 @@ export default AppText;
 
 const styles = StyleSheet.create({
   regular: {
-    fontFamily: "oxygenRegular",
+    fontFamily: "MontserratRegular",
   },
   bold: {
-    fontFamily: "oxygenBold",
+    fontFamily: "MontserratBold",
   },
   light: {
-    fontFamily: "oxygenLight",
+    fontFamily: "MontserratLight",
   },
 });

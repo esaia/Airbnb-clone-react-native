@@ -13,9 +13,10 @@ const _layout = () => {
         screenOptions={{
           tabBarActiveTintColor: Colors.primary,
         }}
+        initialRouteName="home"
       >
         <Tabs.Screen
-          name="home"
+          name="index"
           options={{
             header: () => <MainHeader />,
             tabBarLabel: "home",
