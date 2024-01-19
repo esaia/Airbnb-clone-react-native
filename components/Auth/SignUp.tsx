@@ -1,82 +1,89 @@
 import {
   View,
-  Text,
   TouchableOpacity,
   KeyboardAvoidingView,
+  ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useSignUp } from "@clerk/clerk-expo";
-import { TextInput } from "react-native-gesture-handler";
 import Button from "@/components/PrimaryButton";
 import Input from "@/components/typography/Input";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import AppText from "./typography/AppText";
+import AppText from "../typography/AppText";
 
-const EmailAuth = () => {
+const SignUp = () => {
   const { isLoaded, signUp, setActive } = useSignUp();
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [username, setUsername] = useState("");
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
 
   const [pendingVerification, setPendingVerification] = useState(false);
   const [code, setCode] = useState("");
 
-  const [errors, setErrors] = useState<Partial<ErrorsType>>({});
+  const [errors, setErrors] = useState<Partial<ErrorsType>>({ test: "test" });
   const [clicked, setClicked] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+
   const validate = () => {
-    const errors: Partial<ErrorsType> = {};
+    const errorsTemp: Partial<ErrorsType> = {};
 
     if (!firstName) {
-      errors.firstName = "firstName is required";
+      errorsTemp.firstName = "firstName is required";
     }
 
     if (!lastName) {
-      errors.lastName = "lastName is required";
+      errorsTemp.lastName = "lastName is required";
+    }
+
+    if (!username) {
+      errorsTemp.username = "username is required";
     }
 
     if (!emailAddress) {
-      errors.emailAddress = "Email is required.";
+      errorsTemp.emailAddress = "Email is required.";
     } else if (!/\S+@\S+\.\S+/.test(emailAddress)) {
-      errors.emailAddress = "Email is invalid.";
+      errorsTemp.emailAddress = "Email is invalid.";
     }
 
     if (!password) {
-      errors.password = "Password is required.";
+      errorsTemp.password = "Password is required.";
     } else if (password.length < 6) {
-      errors.password = "Password must be at least 6 characters.";
+      errorsTemp.password = "Password must be at least 6 characters.";
     }
 
-    setErrors(errors);
+    // setErrors((err) => ({ ...err, ...errorsTemp }));
+    setErrors(errorsTemp);
+    return errorsTemp;
   };
 
   useEffect(() => {
     if (clicked) validate();
-  }, [firstName, lastName, emailAddress, password]);
+  }, [firstName, lastName, emailAddress, username, password, clicked]);
 
   const emailSignUp = async () => {
     setClicked(true);
-    validate();
-    console.log("oldenter");
-    if (Object.keys(errors).length > 0) return;
+
+    const errorsValidate = validate();
+
+    if (Object.keys(errorsValidate).length > 0) return;
 
     if (!isLoaded) {
       return;
     }
 
+    setLoading(true);
     try {
       await signUp.create({
         firstName,
         lastName,
+        username,
         emailAddress,
         password,
-      });
-
-      await signUp?.update({
-        username: signUp.id,
       });
 
       // send the email.
@@ -84,10 +91,16 @@ const EmailAuth = () => {
 
       // change the UI to our pending section.
       setPendingVerification(true);
-    } catch (err: any) {
-      setErrors({ ...errors, text: "something went wrong" });
-      console.error(JSON.stringify(err, null, 2));
+    } catch (error: any) {
+      setErrors({
+        ...error,
+        text:
+          (error && error?.errors && error?.errors?.[0]?.message) ||
+          "something went wrong",
+      });
     }
+
+    setLoading(false);
   };
 
   // This verifies the user using email code that is delivered.
@@ -103,29 +116,43 @@ const EmailAuth = () => {
 
       await setActive({ session: completeSignUp.createdSessionId });
       router.back();
-    } catch (err: any) {
-      console.error(JSON.stringify(err, null, 2));
-    }
+    } catch (err: any) {}
   };
 
   return (
-    <KeyboardAvoidingView>
+    <ScrollView className="p-5 " contentContainerStyle={{ paddingBottom: 60 }}>
       {!pendingVerification ? (
-        <View className=" flex-col  ">
+        <View className=" flex-col block   ">
+          <View className="flex-row justify-between gap-3 ">
+            <View className="flex-1">
+              <Input
+                placeHolder="firstname"
+                setValue={setFirstName}
+                value={firstName}
+                name="firstName"
+                errors={errors}
+              />
+            </View>
+
+            <View className="w-full flex-1">
+              <Input
+                placeHolder="lastname"
+                setValue={setLastName}
+                value={lastName}
+                name="lastName"
+                errors={errors}
+              />
+            </View>
+          </View>
+
           <Input
-            placeHolder="firstname"
-            setValue={setFirstName}
-            value={firstName}
-            name="firstName"
+            placeHolder="username"
+            setValue={setUsername}
+            value={username}
+            name="username"
             errors={errors}
           />
-          <Input
-            placeHolder="lastname"
-            setValue={setLastName}
-            value={lastName}
-            name="lastName"
-            errors={errors}
-          />
+
           <Input
             placeHolder="email"
             setValue={setEmailAddress}
@@ -143,11 +170,17 @@ const EmailAuth = () => {
             errors={errors}
           />
 
-          {errors.text && (
-            <AppText classNames="text-red-500 py-1">{errors?.text}</AppText>
-          )}
-          <TouchableOpacity onPress={emailSignUp} className="mt-2">
-            <Button>Continue</Button>
+          <View className="h-12">
+            {errors.text && (
+              <AppText classNames="text-red-500 py-1">
+                {errors?.text} fanssfnjfsnj
+              </AppText>
+            )}
+          </View>
+          <TouchableOpacity disabled={loading} onPress={emailSignUp}>
+            <Button isDisabled={loading}>
+              {loading ? "loading..." : "Sign Up"}
+            </Button>
           </TouchableOpacity>
         </View>
       ) : (
@@ -158,6 +191,15 @@ const EmailAuth = () => {
           >
             <Ionicons name="arrow-back" size={25} />
           </TouchableOpacity>
+          <View className="flex-row flex-wrap gap-y-1 ">
+            <AppText>
+              an email with a verification code was just sent to:
+            </AppText>
+            <AppText thick="bold" classNames="font-bold">
+              {emailAddress}
+            </AppText>
+          </View>
+
           <View>
             <Input
               placeHolder="code"
@@ -172,8 +214,8 @@ const EmailAuth = () => {
           </TouchableOpacity>
         </View>
       )}
-    </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 
-export default EmailAuth;
+export default SignUp;

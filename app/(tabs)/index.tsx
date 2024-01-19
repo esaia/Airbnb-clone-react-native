@@ -15,7 +15,7 @@ const Home = () => {
         }}
       /> */}
 
-      <Link href={"/(modals)/login"}>click this link</Link>
+      <Link href={"/(modals)/loginModal"}>click this link</Link>
 
       <Text onPress={() => signOut()}>LOGOUT</Text>
 

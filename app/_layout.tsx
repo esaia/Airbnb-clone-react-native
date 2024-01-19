@@ -67,16 +67,19 @@ function RootLayoutNav() {
   const { isLoaded, isSignedIn } = useAuth();
 
   useEffect(() => {
-    if (isLoaded && !isSignedIn) router.push("/(modals)/login");
+    if (isLoaded && !isSignedIn) router.push("/(modals)/loginModal");
     // else router.replace("/(tabs)/index");
   }, [isLoaded]);
 
   return (
-    <Stack>
+    <Stack
+      screenOptions={{
+        presentation: "modal",
+      }}
+    >
       <Stack.Screen
-        name="(modals)/login"
+        name="(modals)/loginModal"
         options={{
-          presentation: "modal",
           headerShadowVisible: false,
           headerTitle: "login",
           headerTitleStyle: {
@@ -87,6 +90,7 @@ function RootLayoutNav() {
               <Ionicons name="close" size={25} />
             </TouchableOpacity>
           ),
+          gestureEnabled: false,
         }}
       />
 

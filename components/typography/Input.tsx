@@ -6,7 +6,7 @@ interface PropsType {
   placeHolder: string;
   value: string;
   setValue: (value: string) => void;
-  errors: Partial<ErrorsType>;
+  errors?: Partial<ErrorsType>;
   name: string;
   isPassword?: boolean;
 }
@@ -20,17 +20,21 @@ const Input = ({
   isPassword = false,
 }: PropsType) => {
   return (
-    <View>
+    <View className="h-20  ">
       <TextInput
         onChangeText={(value) => setValue(value)}
         value={value}
         placeholder={placeHolder}
         secureTextEntry={isPassword}
-        className="px-2 py-4 border border-gray-200 rounded-md mt-2 "
+        className={`px-2 py-4 border rounded-md mt-2  bg-white  ${
+          errors && errors[name] ? "border-red-400" : "border-gray-200 "
+        } `}
         placeholderTextColor={"gray"}
       />
-      {errors[name] && (
-        <AppText classNames="text-red-500 py-1">{errors[name]}</AppText>
+      {errors && errors[name] && (
+        <AppText classNames="text-red-500 py-1 text-[12px]">
+          {errors[name]}
+        </AppText>
       )}
     </View>
   );

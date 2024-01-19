@@ -1,14 +1,22 @@
-import { View } from "react-native";
+import { StatusBar, View } from "react-native";
 import React from "react";
 import { Tabs } from "expo-router";
 import MainHeader from "@/components/MainHeader";
-import { Ionicons, FontAwesome, AntDesign, Octicons } from "@expo/vector-icons";
+import {
+  Ionicons,
+  FontAwesome,
+  AntDesign,
+  Octicons,
+  FontAwesome5,
+} from "@expo/vector-icons";
 
 import Colors from "@/constants/Colors";
 
 const _layout = () => {
   return (
     <View className="flex-1">
+      <StatusBar barStyle={"dark-content"} />
+
       <Tabs
         screenOptions={{
           tabBarActiveTintColor: Colors.primary,
@@ -41,7 +49,7 @@ const _layout = () => {
           options={{
             tabBarLabel: "trips",
             tabBarIcon: ({ size, color }) => (
-              <AntDesign name="inbox" size={size} color={color} />
+              <FontAwesome5 name="airbnb" size={size} color={color} />
             ),
           }}
         />
@@ -60,6 +68,8 @@ const _layout = () => {
           name="profile"
           options={{
             tabBarLabel: "profile",
+            headerShown: false,
+
             tabBarIcon: ({ size, color }) => (
               <AntDesign name="user" size={size} color={color} />
             ),

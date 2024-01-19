@@ -10,7 +10,6 @@ const AppText = ({
   children: React.ReactNode;
   classNames?: string;
   thick?: "bold" | "light" | "regular";
-  [key: string]: any;
 }) => {
   return (
     <Text style={styles[thick]} className={classNames} {...attrs}>
