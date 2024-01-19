@@ -1,4 +1,4 @@
-import { StatusBar, View } from "react-native";
+import { StatusBar, Text, View } from "react-native";
 import React from "react";
 import { Tabs } from "expo-router";
 import MainHeader from "@/components/MainHeader";
@@ -6,11 +6,9 @@ import {
   Ionicons,
   FontAwesome,
   AntDesign,
-  Octicons,
   FontAwesome5,
+  Feather,
 } from "@expo/vector-icons";
-
-import Colors from "@/constants/Colors";
 
 const _layout = () => {
   return (
@@ -19,7 +17,15 @@ const _layout = () => {
 
       <Tabs
         screenOptions={{
-          tabBarActiveTintColor: Colors.primary,
+          tabBarActiveTintColor: "#e22d33",
+
+          tabBarStyle: {
+            backgroundColor: "white",
+            paddingBottom: 40,
+            height: 90,
+            borderTopColor: "#dedbdb",
+            borderTopWidth: 1,
+          },
         }}
         initialRouteName="home"
       >
@@ -27,9 +33,19 @@ const _layout = () => {
           name="index"
           options={{
             header: () => <MainHeader />,
-            tabBarLabel: "home",
+            tabBarLabel: ({ color, focused }) => (
+              <Text
+                className="text-xs "
+                style={{
+                  color,
+                  fontFamily: focused ? "MontserratBold" : "MontserratRegular",
+                }}
+              >
+                Explore
+              </Text>
+            ),
             tabBarIcon: ({ size, color }) => (
-              <Ionicons name="home" size={size} color={color} />
+              <Ionicons name="search" size={size} color={color} />
             ),
           }}
         />
@@ -37,8 +53,18 @@ const _layout = () => {
         <Tabs.Screen
           name="wishlists"
           options={{
-            tabBarLabel: "wishlists",
-            tabBarIcon: ({ size, color }) => (
+            tabBarLabel: ({ color, focused }) => (
+              <Text
+                className="text-xs "
+                style={{
+                  color,
+                  fontFamily: focused ? "MontserratBold" : "MontserratRegular",
+                }}
+              >
+                WishLists
+              </Text>
+            ),
+            tabBarIcon: ({ size, color, focused }) => (
               <FontAwesome name="heart-o" size={size} color={color} />
             ),
           }}
@@ -47,7 +73,17 @@ const _layout = () => {
         <Tabs.Screen
           name="trips"
           options={{
-            tabBarLabel: "trips",
+            tabBarLabel: ({ color, focused }) => (
+              <Text
+                className="text-xs "
+                style={{
+                  color,
+                  fontFamily: focused ? "MontserratBold" : "MontserratRegular",
+                }}
+              >
+                Trips
+              </Text>
+            ),
             tabBarIcon: ({ size, color }) => (
               <FontAwesome5 name="airbnb" size={size} color={color} />
             ),
@@ -57,9 +93,19 @@ const _layout = () => {
         <Tabs.Screen
           name="inbox"
           options={{
-            tabBarLabel: "inbox",
+            tabBarLabel: ({ color, focused }) => (
+              <Text
+                className="text-xs "
+                style={{
+                  color,
+                  fontFamily: focused ? "MontserratBold" : "MontserratRegular",
+                }}
+              >
+                Inbox
+              </Text>
+            ),
             tabBarIcon: ({ size, color }) => (
-              <Octicons name="inbox" size={size} color={color} />
+              <Feather name="message-square" size={size} color={color} />
             ),
           }}
         />
@@ -67,7 +113,17 @@ const _layout = () => {
         <Tabs.Screen
           name="profile"
           options={{
-            tabBarLabel: "profile",
+            tabBarLabel: ({ color, focused }) => (
+              <Text
+                className="text-xs "
+                style={{
+                  color,
+                  fontFamily: focused ? "MontserratBold" : "MontserratRegular",
+                }}
+              >
+                Profile
+              </Text>
+            ),
             headerShown: false,
 
             tabBarIcon: ({ size, color }) => (

@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   Alert,
   Image,
+  Keyboard,
 } from "react-native";
 import React, { useState } from "react";
 import Input from "@/components/typography/Input";
@@ -12,6 +13,7 @@ import AppText from "@/components/typography/AppText";
 import { useUser } from "@clerk/clerk-expo";
 
 import * as ImagePicker from "expo-image-picker";
+import { ErrorsType } from "@/types/types";
 
 interface EditUser {
   firstName?: string;
@@ -109,65 +111,69 @@ const Page = () => {
   }
 
   return (
-    <KeyboardAvoidingView
-      behavior="padding"
-      className="flex-1 p-4 justify-center "
-    >
-      <AppText thick="bold" classNames="text-center text-2xl pb-10 ">
-        Edit User
-      </AppText>
-
-      <View className="flex-row gap-5 ">
-        <View className="flex-1 ">
-          <Input
-            value={firstName}
-            setValue={setFirstName}
-            name="firstname"
-            placeHolder="Edit FirstName"
-          />
-        </View>
-        <View className="flex-1">
-          <Input
-            value={lastName}
-            setValue={setLastName}
-            name="firstname"
-            placeHolder="Edit LastName"
-          />
-        </View>
-      </View>
-
-      <Input
-        value={username}
-        setValue={setUsername}
-        name="username"
-        placeHolder="Edit Username"
-      />
-
+    <KeyboardAvoidingView behavior="padding" className="flex-1 p-4  ">
       <TouchableOpacity
-        className="flex-row items-center gap-5"
-        onPress={pickImage}
+        onPress={() => Keyboard.dismiss()}
+        className="flex-1 justify-center
+        "
+        activeOpacity={1}
       >
-        <Image
-          source={{ uri: user.imageUrl }}
-          width={60}
-          height={60}
-          className="rounded-full "
+        <AppText thick="bold" classNames="text-center text-2xl pb-10 ">
+          Edit User
+        </AppText>
+
+        <View className="flex-row gap-5 ">
+          <View className="flex-1 ">
+            <Input
+              value={firstName}
+              setValue={setFirstName}
+              name="firstname"
+              placeHolder="Edit FirstName"
+            />
+          </View>
+          <View className="flex-1">
+            <Input
+              value={lastName}
+              setValue={setLastName}
+              name="firstname"
+              placeHolder="Edit LastName"
+            />
+          </View>
+        </View>
+
+        <Input
+          value={username}
+          setValue={setUsername}
+          name="username"
+          placeHolder="Edit Username"
         />
-        <AppText>Choose Photo</AppText>
-      </TouchableOpacity>
 
-      <View className="h-12">
-        {errors.text && (
-          <AppText classNames="text-red-500 py-1">
-            {errors?.text} fanssfnjfsnj
-          </AppText>
-        )}
-      </View>
+        <TouchableOpacity
+          className="flex-row items-center gap-5"
+          onPress={pickImage}
+        >
+          <Image
+            source={{ uri: user.imageUrl }}
+            width={60}
+            height={60}
+            className="rounded-full "
+          />
+          <AppText>Choose Photo</AppText>
+        </TouchableOpacity>
 
-      <TouchableOpacity disabled={loading} onPress={editUser}>
-        <PrimaryButton isDisabled={loading}>
-          {loading ? "loading..." : "Edit User"}
-        </PrimaryButton>
+        <View className="h-12">
+          {errors.text && (
+            <AppText classNames="text-red-500 py-1">
+              {errors?.text} fanssfnjfsnj
+            </AppText>
+          )}
+        </View>
+
+        <TouchableOpacity disabled={loading} onPress={editUser}>
+          <PrimaryButton isDisabled={loading}>
+            {loading ? "loading..." : "Edit User"}
+          </PrimaryButton>
+        </TouchableOpacity>
       </TouchableOpacity>
     </KeyboardAvoidingView>
   );

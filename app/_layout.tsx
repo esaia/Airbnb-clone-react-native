@@ -72,16 +72,13 @@ function RootLayoutNav() {
   }, [isLoaded]);
 
   return (
-    <Stack
-      screenOptions={{
-        presentation: "modal",
-      }}
-    >
+    <Stack>
       <Stack.Screen
         name="(modals)/loginModal"
         options={{
           headerShadowVisible: false,
           headerTitle: "login",
+          presentation: "modal",
           headerTitleStyle: {
             fontFamily: "MontserratRegular",
           },
@@ -90,6 +87,7 @@ function RootLayoutNav() {
               <Ionicons name="close" size={25} />
             </TouchableOpacity>
           ),
+
           gestureEnabled: false,
         }}
       />

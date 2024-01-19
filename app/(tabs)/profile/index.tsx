@@ -1,18 +1,8 @@
-import {
-  View,
-  Text,
-  Button,
-  Image,
-  Pressable,
-  TouchableOpacity,
-  Alert,
-  StatusBar,
-} from "react-native";
+import { View, Image, TouchableOpacity, Alert } from "react-native";
 import React from "react";
 import { useAuth, useUser } from "@clerk/clerk-expo";
 import AppText from "@/components/typography/AppText";
-import { Link, useRouter } from "expo-router";
-import Colors from "@/constants/Colors";
+import { useRouter } from "expo-router";
 
 const Page = () => {
   const { isSignedIn, user } = useUser();
@@ -39,12 +29,14 @@ const Page = () => {
       ]
     );
   };
+
   if (!isSignedIn) {
     return (
       <View className="  h-full justify-center  p-5">
         <AppText classNames="text-center text-xl mb-5 ">
           You are not signed in
         </AppText>
+
         <TouchableOpacity
           className="rounded-md bg-white "
           onPress={() => {
@@ -61,7 +53,7 @@ const Page = () => {
 
   return (
     <View>
-      <View className="justify-evenly h-full px-4 py-5">
+      <View className="justify-evenly h-full px-4 py-5 ">
         <View className="bg-white p-3  rounded-md  ">
           <View className="justify-center items-center mb-8">
             <Image
@@ -91,7 +83,10 @@ const Page = () => {
               onPress={deleteUserPress}
               className="rounded-md bg-white "
             >
-              <AppText classNames="text-primary uppercase p-5 text-center font-bold">
+              <AppText
+                classNames="text-primary uppercase p-5 text-center"
+                thick="bold"
+              >
                 Delete Account
               </AppText>
             </TouchableOpacity>
@@ -104,7 +99,10 @@ const Page = () => {
               }}
               className="rounded-md bg-white "
             >
-              <AppText classNames="text-blue-950 uppercase p-5 text-center font-bold">
+              <AppText
+                classNames="text-blue-950 uppercase p-5 text-center "
+                thick="bold"
+              >
                 Edit Account
               </AppText>
             </TouchableOpacity>
@@ -117,7 +115,10 @@ const Page = () => {
               router.replace("/(tabs)");
             }}
           >
-            <AppText classNames="text-primary uppercase p-5 text-center font-bold">
+            <AppText
+              classNames="text-primary uppercase p-5 text-center "
+              thick="bold"
+            >
               Logout
             </AppText>
           </TouchableOpacity>

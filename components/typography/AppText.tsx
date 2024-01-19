@@ -5,14 +5,21 @@ const AppText = ({
   children,
   classNames = "",
   thick = "regular",
+  customStyles,
   ...attrs
 }: {
   children: React.ReactNode;
   classNames?: string;
   thick?: "bold" | "light" | "regular";
+  numberOfLines?: number;
+  customStyles?: object;
 }) => {
   return (
-    <Text style={styles[thick]} className={classNames} {...attrs}>
+    <Text
+      style={[styles[thick], customStyles]}
+      className={classNames}
+      {...attrs}
+    >
       {children}
     </Text>
   );

@@ -1,21 +1,11 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-  ScrollView,
-} from "react-native";
+import { View, TouchableOpacity, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useSignIn, useSignUp } from "@clerk/clerk-expo";
-import {
-  TextInput,
-  TouchableWithoutFeedback,
-} from "react-native-gesture-handler";
+import { useSignIn } from "@clerk/clerk-expo";
 import Button from "@/components/PrimaryButton";
 import Input from "@/components/typography/Input";
 import { router } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
 import AppText from "../typography/AppText";
+import { ErrorsType } from "@/types/types";
 
 const LogIn = () => {
   const { isLoaded, signIn, setActive } = useSignIn();

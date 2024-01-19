@@ -11,6 +11,7 @@ import Input from "@/components/typography/Input";
 import { router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import AppText from "../typography/AppText";
+import { ErrorsType } from "@/types/types";
 
 const SignUp = () => {
   const { isLoaded, signUp, setActive } = useSignUp();

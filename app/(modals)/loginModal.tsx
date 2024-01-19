@@ -46,7 +46,7 @@ const login = () => {
             return (
               <TouchableOpacity onPress={() => setIndex(i)} key={i}>
                 <AppText
-                  className={`${i === index && "text-primary font-bold"}`}
+                  classNames={`${i === index && "text-primary font-bold"}`}
                 >
                   {route.title}
                 </AppText>
@@ -61,7 +61,7 @@ const login = () => {
   return (
     <KeyboardAvoidingView
       behavior="padding"
-      className="p-4 flex-col flex-1  bg-white outline-none"
+      className="p-4 flex-col flex-1  bg-white  outline-none "
     >
       <View className=" h-4/6">
         <TabView
