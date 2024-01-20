@@ -1,19 +1,20 @@
 import { View, Text } from "react-native";
-import React from "react";
-import MapView from "react-native-map-clustering";
-import { Marker } from "react-native-maps";
-
+import React, { memo, useRef } from "react";
 import airbnb from "@/assets/data/airbnb-list.json";
 import { AirbnbList } from "@/types/types";
 import { router } from "expo-router";
+import { Marker } from "react-native-maps";
+import MapView from "react-native-map-clustering";
 
-const Map = () => {
-  const INITIAL_REGION = {
-    latitude: 52.514191929150456,
-    longitude: 13.456734695054609,
-    latitudeDelta: 1,
-    longitudeDelta: 1,
-  };
+const INITIAL_REGION = {
+  latitude: 52.514191929150456,
+  longitude: 13.456734695054609,
+  latitudeDelta: 1,
+  longitudeDelta: 1,
+};
+
+const Map = memo(() => {
+  const mapRef = useRef<any>(null);
 
   const cluster = (cluster: any) => {
     const { id, geometry, onPress, properties } = cluster;
@@ -39,6 +40,8 @@ const Map = () => {
   return (
     <View>
       <MapView
+        ref={mapRef}
+        animationEnabled={false}
         className=" w-full h-full"
         provider="google"
         initialRegion={INITIAL_REGION}
@@ -66,6 +69,6 @@ const Map = () => {
       </MapView>
     </View>
   );
-};
+});
 
 export default Map;

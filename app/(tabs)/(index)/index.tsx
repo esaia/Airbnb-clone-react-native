@@ -7,9 +7,15 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import AppText from "@/components/typography/AppText";
-import { AntDesign, Entypo, FontAwesome } from "@expo/vector-icons";
+import { AntDesign, Entypo, FontAwesome, Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link, Stack, router } from "expo-router";
 import Animated, { FadeInLeft, FadeInRight } from "react-native-reanimated";
@@ -22,7 +28,10 @@ import MainHeader from "@/components/MainHeader";
 import MapView from "react-native-maps";
 import Map from "@/components/Map";
 
-// import BottomSheet from "@gorhom/bottom-sheet";
+import BottomSheet, {
+  BottomSheetFlatList,
+  BottomSheetFlatListMethods,
+} from "@gorhom/bottom-sheet";
 
 const Home = () => {
   const categoryChanged = (categoryName: string) => {
@@ -30,19 +39,55 @@ const Home = () => {
     // setListData(filterData);
   };
 
-  // const bottomSheetRef = useRef<BottomSheet>(null);
+  const bottomSheetRef = useRef<BottomSheet>(null);
+  const listRef = useRef<BottomSheetFlatListMethods>();
 
-  //   const snapPoints = useMemo(() => ["25%", "50%"], []);
+  const snapPoints = useMemo(() => ["10%", "100%"], []);
+
+  const onClickMap = () => {
+    if (!bottomSheetRef.current && !listRef.current) return;
+
+    console.log("render");
+    bottomSheetRef.current?.snapToIndex(0);
+    listRef.current?.scrollToIndex({ index: 0 });
+  };
 
   return (
-    <SafeAreaView style={{ flex: 1 }} className=" bg-white">
+    <SafeAreaView style={{ flex: 1 }} className=" bg-white -mt-16">
       <Stack.Screen
         options={{
           header: () => <MainHeader categoryChanged={categoryChanged} />,
         }}
       />
-
       <Map />
+
+      <BottomSheet ref={bottomSheetRef} index={1} snapPoints={snapPoints}>
+        <View className="h-full w-full ">
+          <BottomSheetFlatList
+            ref={listRef as any}
+            data={airbnb as AirbnbList[]}
+            renderItem={Card}
+            showsVerticalScrollIndicator={false}
+            ListHeaderComponent={() => {
+              return (
+                <AppText classNames="text-center py-3">
+                  {(airbnb as AirbnbList[]).length + 1} Places
+                </AppText>
+              );
+            }}
+          />
+
+          <Pressable
+            className="absolute bg-black rounded-full  px-5 py-2 bottom-4 w-30  left-[50%] translate-x-[-60px] flex-row items-center justify-center space-x-2  "
+            onPress={onClickMap}
+          >
+            <AppText classNames="text-white text-xs" thick="bold">
+              Map
+            </AppText>
+            <Ionicons name="map-outline" color={"white"} size={18} />
+          </Pressable>
+        </View>
+      </BottomSheet>
 
       {/* 
       <FlatList
@@ -57,9 +102,6 @@ const Home = () => {
 export default Home;
 
 const Card = ({ item }: { item: AirbnbList }) => {
-  let startAncestor;
-  let startNode;
-
   return (
     <TouchableOpacity activeOpacity={1} className="py-3 px-5 ">
       <Animated.View

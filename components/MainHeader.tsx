@@ -51,7 +51,7 @@ const MainHeader = ({
   return (
     <SafeAreaView className="  bg-white border-b border-gray-100   ">
       <View className="justify-between flex-row px-4  items-center gap-2">
-        <View className="bg-white flex-row items-center  px-5 py-2 rounded-full flex-1 border border-gray-200 shadow-md">
+        <View className="bg-white flex-row items-center  px-5 py-3 rounded-full flex-1 border border-gray-200 shadow-md">
           <FontAwesome name="search" size={20} color="black" />
 
           <View className="ml-4">
