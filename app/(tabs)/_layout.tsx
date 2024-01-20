@@ -30,9 +30,9 @@ const _layout = () => {
         initialRouteName="home"
       >
         <Tabs.Screen
-          name="index"
+          name="(index)"
           options={{
-            header: () => <MainHeader />,
+            headerShown: false,
             tabBarLabel: ({ color, focused }) => (
               <Text
                 className="text-xs "

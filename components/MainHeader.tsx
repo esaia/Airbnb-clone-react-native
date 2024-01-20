@@ -6,7 +6,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import { MaterialIcons } from "@expo/vector-icons";
 
-const MainHeader = () => {
+const MainHeader = ({
+  categoryChanged,
+}: {
+  categoryChanged: (categoryName: string) => void;
+}) => {
   const categories = [
     {
       name: "Tiny homes",
@@ -38,6 +42,11 @@ const MainHeader = () => {
     },
   ];
   const [activeIndex, setActiveIndex] = useState(0);
+
+  const onPressCategory = (index: number) => {
+    setActiveIndex(index);
+    categoryChanged(categories[index].name);
+  };
 
   return (
     <SafeAreaView className="  bg-white border-b border-gray-100   ">
@@ -73,7 +82,7 @@ const MainHeader = () => {
               className={`items-center py-2 border-b-2 ${
                 activeIndex === index ? "border-black" : "border-transparent"
               } `}
-              onPress={() => setActiveIndex(index)}
+              onPress={() => onPressCategory(index)}
               key={index}
             >
               <MaterialIcons
