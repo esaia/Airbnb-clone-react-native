@@ -3,53 +3,38 @@ import {
   Image,
   Pressable,
   SafeAreaView,
-  Text,
   TouchableOpacity,
   View,
 } from "react-native";
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useMemo, useRef } from "react";
 import AppText from "@/components/typography/AppText";
 import { AntDesign, Entypo, FontAwesome, Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import { Link, Stack, router } from "expo-router";
-import Animated, { FadeInLeft, FadeInRight } from "react-native-reanimated";
-
+import { Stack, router } from "expo-router";
+import Animated, { FadeInLeft } from "react-native-reanimated";
 import airbnb from "@/assets/data/airbnb-list.json";
 import type { AirbnbList } from "@/types/types";
-
-import { SharedElement } from "react-native-shared-element";
 import MainHeader from "@/components/MainHeader";
-import MapView from "react-native-maps";
 import Map from "@/components/Map";
 
-import BottomSheet, {
-  BottomSheetFlatList,
-  BottomSheetFlatListMethods,
-} from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 
 const Home = () => {
-  const categoryChanged = (categoryName: string) => {
-    // setCategory(categoryName);
-    // setListData(filterData);
-  };
-
   const bottomSheetRef = useRef<BottomSheet>(null);
-  const listRef = useRef<BottomSheetFlatListMethods>();
+  const listRef = useRef<FlatList>();
 
   const snapPoints = useMemo(() => ["10%", "100%"], []);
 
   const onClickMap = () => {
     if (!bottomSheetRef.current && !listRef.current) return;
 
-    console.log("render");
     bottomSheetRef.current?.snapToIndex(0);
-    listRef.current?.scrollToIndex({ index: 0 });
+    listRef.current?.scrollToOffset({ offset: 0, animated: true });
+  };
+
+  const categoryChanged = (categoryName: string) => {
+    // setCategory(categoryName);
+    // setListData(filterData);
   };
 
   return (
@@ -59,10 +44,11 @@ const Home = () => {
           header: () => <MainHeader categoryChanged={categoryChanged} />,
         }}
       />
+
       <Map />
 
       <BottomSheet ref={bottomSheetRef} index={1} snapPoints={snapPoints}>
-        <View className="h-full w-full ">
+        <View className="h-full w-full">
           <BottomSheetFlatList
             ref={listRef as any}
             data={airbnb as AirbnbList[]}
@@ -84,17 +70,11 @@ const Home = () => {
             <AppText classNames="text-white text-xs" thick="bold">
               Map
             </AppText>
+
             <Ionicons name="map-outline" color={"white"} size={18} />
           </Pressable>
         </View>
       </BottomSheet>
-
-      {/* 
-      <FlatList
-        data={airbnb as AirbnbList[]}
-        renderItem={Card}
-        showsVerticalScrollIndicator={false}
-      /> */}
     </SafeAreaView>
   );
 };
@@ -103,13 +83,21 @@ export default Home;
 
 const Card = ({ item }: { item: AirbnbList }) => {
   return (
-    <TouchableOpacity activeOpacity={1} className="py-3 px-5 ">
+    <TouchableOpacity
+      activeOpacity={1}
+      className="py-3 px-5 "
+      onPress={() => router.push(`/(tabs)/(index)/${item.id}`)}
+    >
       <Animated.View
         entering={FadeInLeft.duration(500).delay(200)}
         // exiting={FadeInRight.duration(500)}
       >
         <View className="relative rounded-md overflow-hidden">
-          <Image source={{ uri: item.medium_url }} className="w-full h-60 " />
+          <Animated.Image
+            sharedTransitionTag={`image-${item.id}`}
+            source={{ uri: item.medium_url }}
+            className="w-full h-60 "
+          />
 
           <LinearGradient
             colors={["rgba(0, 0, 0, 0.733)", "transparent"]}
@@ -135,8 +123,7 @@ const Card = ({ item }: { item: AirbnbList }) => {
           <View className="absolute bottom-0 left-0 w-full p-5 flex-row justify-between space-x-5">
             <View className="flex-1 space-y-2">
               <AppText thick="bold" classNames="text-white" numberOfLines={2}>
-                {item.name} Lorem ipsum dolor sit amet, consectetur adipisicing
-                elit. Molestias, nemo.
+                {item.name}
               </AppText>
 
               <AppText classNames="text-gray-200" thick="light">

@@ -1,5 +1,5 @@
 import { View, Text, SafeAreaView, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import AppText from "./typography/AppText";
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
@@ -43,13 +43,21 @@ const MainHeader = ({
   ];
   const [activeIndex, setActiveIndex] = useState(0);
 
+  const categoryScrollRef = useRef<ScrollView>();
+  const categoryItemRef = useRef<TouchableOpacity[]>([]);
+
   const onPressCategory = (index: number) => {
     setActiveIndex(index);
     categoryChanged(categories[index].name);
+    if (!categoryItemRef.current) return;
+
+    categoryItemRef.current[index].measure((x) => {
+      categoryScrollRef.current?.scrollTo({ x: x - 20, y: 0, animated: true });
+    });
   };
 
   return (
-    <SafeAreaView className="  bg-white border-b border-gray-100   ">
+    <SafeAreaView className=" bg-white border-b border-gray-100   ">
       <View className="justify-between flex-row px-4  items-center gap-2">
         <View className="bg-white flex-row items-center  px-5 py-3 rounded-full flex-1 border border-gray-200 shadow-md">
           <FontAwesome name="search" size={20} color="black" />
@@ -68,6 +76,7 @@ const MainHeader = ({
       </View>
 
       <ScrollView
+        ref={categoryScrollRef as any}
         horizontal
         contentContainerStyle={{
           alignItems: "center",
@@ -84,16 +93,19 @@ const MainHeader = ({
               } `}
               onPress={() => onPressCategory(index)}
               key={index}
+              ref={(el: TouchableOpacity) =>
+                (categoryItemRef.current[index] = el)
+              }
             >
               <MaterialIcons
                 name={category.icon as any}
                 size={24}
-                color={activeIndex === index ? "#000000" : "#707070"}
+                color={activeIndex === index ? "#000000" : "#aaaaaa"}
               />
 
               <AppText
-                classNames={` ${
-                  activeIndex === index ? "text-black" : "text-[#707070]"
+                classNames={` text-xs ${
+                  activeIndex === index ? "text-black" : "text-[#aaaaaa]"
                 }`}
               >
                 {category.name}

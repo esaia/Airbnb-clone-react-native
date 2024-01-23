@@ -1,11 +1,12 @@
 import { useEffect } from "react";
+import { TouchableOpacity } from "react-native";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack, useRouter } from "expo-router";
 import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
 
 import * as SecureStore from "expo-secure-store";
 import { Ionicons } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -57,7 +58,9 @@ export default function RootLayout() {
       publishableKey={CLERK_PUBLISHABLE_KEY!}
       tokenCache={tokenCache}
     >
-      <RootLayoutNav />
+      <BottomSheetModalProvider>
+        <RootLayoutNav />
+      </BottomSheetModalProvider>
     </ClerkProvider>
   );
 }

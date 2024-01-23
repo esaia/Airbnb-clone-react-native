@@ -28,7 +28,7 @@ const login = () => {
 
   useEffect(() => {
     if (isLoaded && isSignedIn) {
-      router.push("/(tabs)/");
+      router.push("/(tabs)/(index)");
     }
   }, [isSignedIn]);
 

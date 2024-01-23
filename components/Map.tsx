@@ -5,6 +5,7 @@ import { AirbnbList } from "@/types/types";
 import { router } from "expo-router";
 import { Marker } from "react-native-maps";
 import MapView from "react-native-map-clustering";
+import AppText from "@/components/typography/AppText";
 
 const INITIAL_REGION = {
   latitude: 52.514191929150456,
@@ -30,8 +31,8 @@ const Map = memo(() => {
         }}
         onPress={onPress}
       >
-        <View className="p-2 w-10 justify-center items-center  rounded-full bg-primary shadow-lg aspect-square">
-          <Text className="text-xs text-white">{points}</Text>
+        <View className="p-2 w-14 justify-center items-center  rounded-full bg-primary aspect-square shadow-inner border border-[#772626]">
+          <AppText classNames="text-xs text-white">{points}</AppText>
         </View>
       </Marker>
     );
@@ -60,8 +61,10 @@ const Map = memo(() => {
               }}
               onPress={() => router.push(`/(tabs)/inbox`)}
             >
-              <View className="bg-white rounded-full py-2 px-5 shadow-lg border-[1px] border-gray-500">
-                <Text>{item.price} $</Text>
+              <View className="bg-white rounded-full py-1 px-3  border-[1px] border-gray-500">
+                <AppText classNames="text-md" thick="bold">
+                  {item.price} $
+                </AppText>
               </View>
             </Marker>
           );
