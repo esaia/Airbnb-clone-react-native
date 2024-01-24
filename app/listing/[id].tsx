@@ -5,7 +5,9 @@ import airbnb from "@/assets/data/airbnb-list.json";
 import { AirbnbList } from "@/types/types";
 import AppText from "@/components/typography/AppText";
 import Animated, {
+  FadeIn,
   FadeInDown,
+  FadeOutDown,
   interpolate,
   useAnimatedRef,
   useAnimatedStyle,
@@ -59,21 +61,23 @@ const page = () => {
     return {
       opacity: interpolate(
         scrollOffset.value,
-        [IMAGE_HEIGHT / 2, IMAGE_HEIGHT * 0.7],
-        [0, 1]
+        [IMAGE_HEIGHT / 2, IMAGE_HEIGHT * 0.7, IMAGE_HEIGHT * 2],
+        [0, 1, 1]
       ),
     };
   });
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerBackground: () => (
-        <Animated.View
-          className="w-full h-full bg-white border-b-[1px] border-b-gray-200"
-          style={headerBackgroundStyle}
-        />
-      ),
-    });
+  useEffect(() => {
+    setTimeout(() => {
+      navigation.setOptions({
+        headerBackground: () => (
+          <Animated.View
+            className="w-full h-full bg-white border-b-[1px] border-b-gray-200"
+            style={headerBackgroundStyle}
+          />
+        ),
+      });
+    }, 500);
   }, []);
 
   return (
@@ -82,7 +86,7 @@ const page = () => {
 
       <Animated.ScrollView
         className=" z-4  bg-white "
-        contentContainerStyle={{ paddingBottom: 20 }}
+        contentContainerStyle={{ paddingBottom: 110 }}
         ref={scrollRef}
         scrollEventThrottle={16}
         showsVerticalScrollIndicator={false}
@@ -96,7 +100,7 @@ const page = () => {
 
         <Animated.View
           className="px-5 space-y-5 z-5 bg-white pt-5"
-          entering={FadeInDown.duration(500).delay(400)}
+          entering={FadeIn.duration(500).delay(100)}
         >
           <View>
             <AppText classNames="text-2xl " thick="bold">
@@ -173,10 +177,6 @@ const page = () => {
                   Reviews
                 </AppText>
               </View>
-
-              <View>
-                <AppText> bottom </AppText>
-              </View>
             </View>
           )}
 
@@ -212,23 +212,29 @@ const page = () => {
               </AppText>
               <Entypo name="chevron-right" size={16} color="black" />
             </TouchableOpacity>
-
-            <AppText>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam
-              corrupti temporibus explicabo illo saepe nobis laboriosam eos.
-              Aliquam dolores unde hic amet iste impedit assumenda tenetur quae!
-              Voluptatem sint magni quas iusto, itaque consequatur soluta culpa,
-              hic dolores, dicta facere. Lorem ipsum dolor sit amet consectetur,
-              adipisicing elit. Fugiat enim dignissimos numquam magni, eligendi
-              corrupti debitis autem voluptates praesentium nesciunt quasi est
-              aperiam assumenda odio nemo vitae voluptate architecto omnis optio
-              magnam inventore molestiae nam deleniti? Tenetur nihil aspernatur,
-              tempore, quam perspiciatis aliquid voluptatum quas quia reiciendis
-              officia corrupti libero!
-            </AppText>
           </View>
         </Animated.View>
       </Animated.ScrollView>
+
+      <Animated.View
+        className="py-6 px-5 bg-white border-t-[1px] border-t-gray-200 flex-row justify-between items-center absolute bottom-0 w-full  "
+        entering={FadeInDown.duration(200).delay(300)}
+        exiting={FadeOutDown}
+      >
+        <View className="flex-row items-center space-x-2">
+          <AppText thick="bold" classNames="text-lg">
+            $ 204
+          </AppText>
+          <AppText classNames="" thick="light">
+            night
+          </AppText>
+        </View>
+        <TouchableOpacity className="px-10 py-4 bg-primary rounded-lg ">
+          <AppText classNames="text-white " thick="bold">
+            reserve
+          </AppText>
+        </TouchableOpacity>
+      </Animated.View>
     </View>
   );
 };

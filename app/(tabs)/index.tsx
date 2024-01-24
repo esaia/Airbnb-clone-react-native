@@ -53,6 +53,7 @@ const Home = () => {
             ref={listRef as any}
             data={airbnb as AirbnbList[]}
             renderItem={Card}
+            initialNumToRender={7}
             showsVerticalScrollIndicator={false}
             ListHeaderComponent={() => {
               return (
