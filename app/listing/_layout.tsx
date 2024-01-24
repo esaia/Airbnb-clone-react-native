@@ -2,6 +2,7 @@ import { View, Text, Pressable } from "react-native";
 import React, { ReactElement } from "react";
 import { Stack, router } from "expo-router";
 import { AntDesign, Entypo, Feather, Ionicons } from "@expo/vector-icons";
+import Icon from "@/components/Icon";
 
 const layout = () => {
   return (
@@ -46,20 +47,3 @@ const layout = () => {
 };
 
 export default layout;
-
-const Icon = ({
-  icon,
-  onPress,
-}: {
-  icon: ReactElement;
-  onPress?: () => void;
-}) => {
-  return (
-    <Pressable
-      className="p-[7px] rounded-full bg-white border-[0.4px] border-gray-400 shadow-lg justify-between aspect-square"
-      onPress={onPress}
-    >
-      {icon}
-    </Pressable>
-  );
-};

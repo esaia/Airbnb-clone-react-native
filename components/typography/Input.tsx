@@ -1,6 +1,7 @@
 import { View, Text, TextInput } from "react-native";
 import React from "react";
 import AppText from "./AppText";
+import { ErrorsType } from "@/types/types";
 
 interface PropsType {
   placeHolder: string;

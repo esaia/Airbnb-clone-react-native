@@ -1,9 +1,11 @@
-import { ReactElement, useEffect } from "react";
-import { Pressable, TouchableOpacity, View } from "react-native";
+import { useEffect } from "react";
 import { Stack, useRouter } from "expo-router";
 import { useAuth } from "@clerk/clerk-expo";
-
-import { AntDesign, Entypo, Feather, Ionicons } from "@expo/vector-icons";
+import { TouchableOpacity, View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import Icon from "@/components/Icon";
+import AppText from "@/components/typography/AppText";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 function RootLayoutNav() {
   const router = useRouter();
@@ -14,12 +16,13 @@ function RootLayoutNav() {
     // else router.replace("/(tabs)/index");
   }, [isLoaded]);
 
+  const { top } = useSafeAreaInsets();
+
   return (
     <Stack>
       <Stack.Screen
         name="(modals)/loginModal"
         options={{
-          headerShadowVisible: false,
           headerTitle: "login",
           presentation: "modal",
           headerTitleStyle: {
@@ -31,7 +34,47 @@ function RootLayoutNav() {
             </TouchableOpacity>
           ),
 
-          gestureEnabled: false,
+          //   gestureEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="(modals)/booking"
+        options={{
+          header: () => (
+            <View
+              className=" flex-row justify-between items-center p-5  h-28 relative "
+              style={{ paddingTop: top }}
+            >
+              <View className="flex-1">
+                <Icon
+                  onPress={() => router.push("/")}
+                  icon={<Ionicons name="close" size={17} />}
+                />
+              </View>
+
+              <View className="flex-1 items-center flex-row space-x-3">
+                <AppText thick="bold" classNames=" text-lg ">
+                  Stays
+                </AppText>
+                <AppText thick="bold" classNames="text-gray-500 text-lg">
+                  Experiences
+                </AppText>
+              </View>
+              <View className="flex-1" />
+            </View>
+          ),
+          animation: "fade",
+          headerTransparent: true,
+          presentation: "transparentModal",
+          headerTitleStyle: {
+            fontFamily: "MontserratRegular",
+          },
+          // headerLeft: () => (
+          //   <Icon
+          //     onPress={() => router.push("/")}
+          //     icon={<Ionicons name="close" size={17} />}
+          //   />
+          // ),
         }}
       />
 
