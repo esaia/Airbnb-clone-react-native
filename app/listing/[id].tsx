@@ -13,7 +13,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { Entypo, Ionicons } from "@expo/vector-icons";
 
-import { useSingleViewContext } from "./_layout";
+import { useSingleViewContext } from "@/contexts/SingleViewContextProvider";
 
 const IMAGE_HEIGHT = 300;
 
@@ -59,7 +59,7 @@ const page = () => {
     return {
       opacity: interpolate(
         scrollOffset.value,
-        [IMAGE_HEIGHT / 2, IMAGE_HEIGHT * 0.75],
+        [IMAGE_HEIGHT / 2, IMAGE_HEIGHT * 0.7],
         [0, 1]
       ),
     };
@@ -173,6 +173,10 @@ const page = () => {
                   Reviews
                 </AppText>
               </View>
+
+              <View>
+                <AppText> bottom </AppText>
+              </View>
             </View>
           )}
 
@@ -200,7 +204,7 @@ const page = () => {
               className="flex-row items-center"
               onPress={() => {
                 setDescription(singeleList?.description || "");
-                router.push("/(tabs)/(index)/descriptionModal");
+                router.push("/listing/descriptionModal");
               }}
             >
               <AppText thick="bold" classNames="underline ">

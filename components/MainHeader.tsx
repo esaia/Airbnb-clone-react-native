@@ -6,11 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import { MaterialIcons } from "@expo/vector-icons";
 
-const MainHeader = ({
-  categoryChanged,
-}: {
-  categoryChanged: (categoryName: string) => void;
-}) => {
+const MainHeader = () => {
   const categories = [
     {
       name: "Tiny homes",
@@ -48,7 +44,6 @@ const MainHeader = ({
 
   const onPressCategory = (index: number) => {
     setActiveIndex(index);
-    categoryChanged(categories[index].name);
     if (!categoryItemRef.current) return;
 
     categoryItemRef.current[index].measure((x) => {

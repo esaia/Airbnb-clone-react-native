@@ -1,6 +1,6 @@
 import React from "react";
 import AppText from "@/components/typography/AppText";
-import { useSingleViewContext } from "./_layout";
+import { useSingleViewContext } from "@/contexts/SingleViewContextProvider";
 import Animated, {
   useAnimatedRef,
   useAnimatedStyle,

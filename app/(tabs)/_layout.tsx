@@ -2,6 +2,7 @@ import { StatusBar, Text, View } from "react-native";
 import React from "react";
 import { Tabs } from "expo-router";
 import MainHeader from "@/components/MainHeader";
+
 import {
   Ionicons,
   FontAwesome,
@@ -30,9 +31,9 @@ const _layout = () => {
         initialRouteName="home"
       >
         <Tabs.Screen
-          name="(index)"
+          name="index"
           options={{
-            headerShown: false,
+            header: () => <MainHeader />,
             tabBarLabel: ({ color, focused }) => (
               <Text
                 className="text-xs "

@@ -1,12 +1,12 @@
 import { useEffect } from "react";
-import { TouchableOpacity } from "react-native";
 import { useFonts } from "expo-font";
-import { SplashScreen, Stack, useRouter } from "expo-router";
-import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
+import { SplashScreen } from "expo-router";
+import { ClerkProvider } from "@clerk/clerk-expo";
 
 import * as SecureStore from "expo-secure-store";
-import { Ionicons } from "@expo/vector-icons";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import RootLayoutNav from "./RootLayoutNav";
+import SingleViewContextProvider from "@/contexts/SingleViewContextProvider";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -58,44 +58,11 @@ export default function RootLayout() {
       publishableKey={CLERK_PUBLISHABLE_KEY!}
       tokenCache={tokenCache}
     >
-      <BottomSheetModalProvider>
-        <RootLayoutNav />
-      </BottomSheetModalProvider>
+      <SingleViewContextProvider>
+        <BottomSheetModalProvider>
+          <RootLayoutNav />
+        </BottomSheetModalProvider>
+      </SingleViewContextProvider>
     </ClerkProvider>
-  );
-}
-
-function RootLayoutNav() {
-  const router = useRouter();
-  const { isLoaded, isSignedIn } = useAuth();
-
-  useEffect(() => {
-    if (isLoaded && !isSignedIn) router.push("/(modals)/loginModal");
-    // else router.replace("/(tabs)/index");
-  }, [isLoaded]);
-
-  return (
-    <Stack>
-      <Stack.Screen
-        name="(modals)/loginModal"
-        options={{
-          headerShadowVisible: false,
-          headerTitle: "login",
-          presentation: "modal",
-          headerTitleStyle: {
-            fontFamily: "MontserratRegular",
-          },
-          headerLeft: () => (
-            <TouchableOpacity onPress={() => router.back()}>
-              <Ionicons name="close" size={25} />
-            </TouchableOpacity>
-          ),
-
-          gestureEnabled: false,
-        }}
-      />
-
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-    </Stack>
   );
 }

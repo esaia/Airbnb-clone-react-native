@@ -41,7 +41,7 @@ const Home = () => {
     <SafeAreaView style={{ flex: 1 }} className=" bg-white -mt-16">
       <Stack.Screen
         options={{
-          header: () => <MainHeader categoryChanged={categoryChanged} />,
+          header: () => <MainHeader />,
         }}
       />
 
@@ -86,7 +86,7 @@ const Card = ({ item }: { item: AirbnbList }) => {
     <TouchableOpacity
       activeOpacity={1}
       className="py-3 px-5 "
-      onPress={() => router.push(`/(tabs)/(index)/${item.id}`)}
+      onPress={() => router.push(`/listing/${item.id}`)}
     >
       <Animated.View
         entering={FadeInLeft.duration(500).delay(200)}
