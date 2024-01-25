@@ -1,4 +1,4 @@
-import { Image, StatusBar, TouchableOpacity, View } from "react-native";
+import { Image, Modal, StatusBar, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import airbnb from "@/assets/data/airbnb-list.json";

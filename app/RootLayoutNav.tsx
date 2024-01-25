@@ -33,8 +33,6 @@ function RootLayoutNav() {
               <Ionicons name="close" size={25} />
             </TouchableOpacity>
           ),
-
-          //   gestureEnabled: false,
         }}
       />
       <Stack.Screen
@@ -42,7 +40,7 @@ function RootLayoutNav() {
         options={{
           header: () => (
             <View
-              className=" flex-row justify-between items-center p-5  h-28 relative "
+              className=" flex-row justify-between items-center p-5  h-28 relative"
               style={{ paddingTop: top }}
             >
               <View className="flex-1">
@@ -69,12 +67,6 @@ function RootLayoutNav() {
           headerTitleStyle: {
             fontFamily: "MontserratRegular",
           },
-          // headerLeft: () => (
-          //   <Icon
-          //     onPress={() => router.push("/")}
-          //     icon={<Ionicons name="close" size={17} />}
-          //   />
-          // ),
         }}
       />
 

@@ -43,7 +43,7 @@ const Map = memo(() => {
       <MapView
         ref={mapRef}
         animationEnabled={false}
-        className=" w-full h-full"
+        className="w-full h-full"
         provider="google"
         initialRegion={INITIAL_REGION}
         renderCluster={cluster}

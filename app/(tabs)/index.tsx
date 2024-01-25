@@ -57,7 +57,7 @@ const Home = () => {
             showsVerticalScrollIndicator={false}
             ListHeaderComponent={() => {
               return (
-                <AppText classNames="text-center py-3">
+                <AppText classNames="text-center py-3 ">
                   {(airbnb as AirbnbList[]).length + 1} Places
                 </AppText>
               );
@@ -65,7 +65,7 @@ const Home = () => {
           />
 
           <Pressable
-            className="absolute bg-black rounded-full  px-5 py-2 bottom-4 w-30  left-[50%] translate-x-[-60px] flex-row items-center justify-center space-x-2  "
+            className="absolute bg-black rounded-full  px-5 py-2 bottom-4 w-24   left-[50%] translate-x-[-48px] flex-row items-center justify-center space-x-2  "
             onPress={onClickMap}
           >
             <AppText classNames="text-white text-xs" thick="bold">

@@ -6,7 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import Animated from "react-native-reanimated";
+import Animated, { FadeOutDown } from "react-native-reanimated";
 
 const MainHeader = () => {
   const categories = [
@@ -58,11 +58,11 @@ const MainHeader = () => {
       <View className="justify-between flex-row px-4  items-center gap-2">
         <TouchableOpacity
           onPress={() => router.push("/(modals)/booking")}
-          className="bg-white flex-row items-center  px-5 py-3 rounded-full flex-1 border border-gray-200 shadow-md"
+          className="relative  bg-white px-5 py-3  overflow-hidden flex-row items-center  rounded-full flex-1 border border-gray-200 shadow-md"
         >
           <FontAwesome name="search" size={20} color="black" />
 
-          <View className="ml-4">
+          <View className="ml-4 ">
             <AppText thick="bold">Where to?</AppText>
             <AppText classNames="text-xs text-gray-500">
               Anywhere • Any week • Add Guests
