@@ -23,7 +23,7 @@ const Page = () => {
           text: "OK",
           onPress: async () => {
             await user?.delete();
-            router.replace("/(tabs)/");
+            router.replace("/(tabs)");
           },
         },
       ]
@@ -95,7 +95,7 @@ const Page = () => {
               onPress={async () => {
                 router.push("/profile/edit");
                 // await user?.delete();
-                // router.replace("/(tabs)/");
+                // router.replace("/(tabs)");
               }}
               className="rounded-md bg-white "
             >
@@ -112,7 +112,7 @@ const Page = () => {
             className="rounded-md bg-white  "
             onPress={() => {
               signOut();
-              router.replace("/(tabs)/");
+              router.replace("/(tabs)");
             }}
           >
             <AppText

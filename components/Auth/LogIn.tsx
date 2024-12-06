@@ -60,7 +60,7 @@ const LogIn = () => {
       });
 
       await setActive({ session: completeSignIn.createdSessionId });
-      router.push("/(tabs)/");
+      router.push("/(tabs)");
     } catch (error: any) {
       console.log("errrrorrr ->>>> ", error, error?.errors?.[0]?.message);
 
