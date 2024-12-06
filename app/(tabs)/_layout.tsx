@@ -28,7 +28,7 @@ const _layout = () => {
             borderTopWidth: 1,
           },
         }}
-        initialRouteName="home"
+        initialRouteName="index"
       >
         <Tabs.Screen
           name="index"

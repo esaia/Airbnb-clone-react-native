@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, ScrollView } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useSignIn } from "@clerk/clerk-expo";
 import Button from "@/components/PrimaryButton";
@@ -76,7 +76,7 @@ const LogIn = () => {
   };
 
   return (
-    <ScrollView className="p-5 ">
+    <View className="p-5 ">
       <View className=" flex-col p  ">
         <Input
           placeHolder="email or username"
@@ -107,7 +107,7 @@ const LogIn = () => {
           </Button>
         </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 

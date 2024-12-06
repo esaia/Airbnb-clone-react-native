@@ -1,9 +1,4 @@
-import {
-  View,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-  ScrollView,
-} from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useSignUp } from "@clerk/clerk-expo";
 import Button from "@/components/PrimaryButton";
@@ -121,7 +116,7 @@ const SignUp = () => {
   };
 
   return (
-    <ScrollView className="p-5 " contentContainerStyle={{ paddingBottom: 60 }}>
+    <View className="p-5 ">
       {!pendingVerification ? (
         <View className=" flex-col block   ">
           <View className="flex-row justify-between gap-3 ">
@@ -215,7 +210,7 @@ const SignUp = () => {
           </TouchableOpacity>
         </View>
       )}
-    </ScrollView>
+    </View>
   );
 };
 

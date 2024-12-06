@@ -6,24 +6,20 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef } from "react";
 import AppText from "@/components/typography/AppText";
 import { AntDesign, Entypo, FontAwesome, Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
-import Animated, { FadeInLeft } from "react-native-reanimated";
+import Animated, { FadeIn, FadeInLeft } from "react-native-reanimated";
 import airbnb from "@/assets/data/airbnb-list.json";
 import type { AirbnbList } from "@/types/types";
-import Map from "@/components/Map";
 
 import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
-import Icon from "@/components/Icon";
 
 const Home = () => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const listRef = useRef<FlatList>();
-
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   const snapPoints = useMemo(() => ["10%", "100%"], []);
 
@@ -40,12 +36,7 @@ const Home = () => {
 
       <Text className="mt-16"> Map </Text>
 
-      <BottomSheet
-        ref={bottomSheetRef}
-        index={1}
-        snapPoints={snapPoints}
-        onChange={(index) => setCurrentIndex(index)}
-      >
+      <BottomSheet ref={bottomSheetRef} index={1} snapPoints={snapPoints}>
         <View className="h-full w-full">
           <BottomSheetFlatList
             ref={listRef as any}
@@ -88,7 +79,7 @@ const Card = ({ item }: { item: AirbnbList }) => {
       onPress={() => router.push(`/listing/${item.id}`)}
     >
       <Animated.View
-        entering={FadeInLeft.duration(500).delay(200)}
+        entering={FadeIn.duration(500)}
         // exiting={FadeInRight.duration(500)}
       >
         <View className="relative rounded-md overflow-hidden">
