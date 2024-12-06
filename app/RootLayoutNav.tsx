@@ -35,6 +35,7 @@ function RootLayoutNav() {
           ),
         }}
       />
+
       <Stack.Screen
         name="(modals)/booking"
         options={{
@@ -43,12 +44,12 @@ function RootLayoutNav() {
               className=" flex-row justify-between items-center p-5  h-28 relative"
               style={{ paddingTop: top }}
             >
-              <View className="flex-1">
+              <TouchableOpacity className="flex-1">
                 <Icon
-                  onPress={() => router.push("/")}
+                  onPress={() => router.back()}
                   icon={<Ionicons name="close" size={17} />}
                 />
-              </View>
+              </TouchableOpacity>
 
               <View className="flex-1 items-center flex-row space-x-3">
                 <AppText thick="bold" classNames=" text-lg ">

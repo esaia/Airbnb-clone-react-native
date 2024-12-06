@@ -1,22 +1,9 @@
-import {
-  View,
-  TextInput,
-  Image,
-  Pressable,
-  StyleSheet,
-  ScrollView,
-} from "react-native";
+import { View, TextInput, Image, Pressable, ScrollView } from "react-native";
 import React, { ReactElement, useMemo, useState } from "react";
 import { BlurView } from "expo-blur";
 import AppText from "@/components/typography/AppText";
 import { AntDesign, Entypo, Ionicons } from "@expo/vector-icons";
-import Animated, {
-  FadeIn,
-  FadeInDown,
-  FadeOut,
-  FadeOutDown,
-  LightSpeedOutRight,
-} from "react-native-reanimated";
+import Animated, { FadeIn, FadeInDown, FadeOut } from "react-native-reanimated";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 interface GuestsType {

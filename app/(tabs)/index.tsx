@@ -1,27 +1,29 @@
 import {
   FlatList,
-  Image,
   Pressable,
   SafeAreaView,
+  Text,
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useMemo, useRef } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import AppText from "@/components/typography/AppText";
 import { AntDesign, Entypo, FontAwesome, Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import { Stack, router } from "expo-router";
+import { router } from "expo-router";
 import Animated, { FadeInLeft } from "react-native-reanimated";
 import airbnb from "@/assets/data/airbnb-list.json";
 import type { AirbnbList } from "@/types/types";
-import MainHeader from "@/components/MainHeader";
 import Map from "@/components/Map";
 
 import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
+import Icon from "@/components/Icon";
 
 const Home = () => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const listRef = useRef<FlatList>();
+
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const snapPoints = useMemo(() => ["10%", "100%"], []);
 
@@ -32,22 +34,18 @@ const Home = () => {
     listRef.current?.scrollToOffset({ offset: 0, animated: true });
   };
 
-  const categoryChanged = (categoryName: string) => {
-    // setCategory(categoryName);
-    // setListData(filterData);
-  };
-
   return (
-    <SafeAreaView style={{ flex: 1 }} className=" bg-white -mt-16">
-      <Stack.Screen
-        options={{
-          header: () => <MainHeader />,
-        }}
-      />
+    <SafeAreaView style={{ flex: 1 }} className="bg-white -mt-16">
+      {/* <Map /> */}
 
-      <Map />
+      <Text className="mt-16"> Map </Text>
 
-      <BottomSheet ref={bottomSheetRef} index={1} snapPoints={snapPoints}>
+      <BottomSheet
+        ref={bottomSheetRef}
+        index={1}
+        snapPoints={snapPoints}
+        onChange={(index) => setCurrentIndex(index)}
+      >
         <View className="h-full w-full">
           <BottomSheetFlatList
             ref={listRef as any}

@@ -7,6 +7,7 @@ import * as SecureStore from "expo-secure-store";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import RootLayoutNav from "./RootLayoutNav";
 import SingleViewContextProvider from "@/contexts/SingleViewContextProvider";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -58,11 +59,13 @@ export default function RootLayout() {
       publishableKey={CLERK_PUBLISHABLE_KEY!}
       tokenCache={tokenCache}
     >
-      <SingleViewContextProvider>
-        <BottomSheetModalProvider>
-          <RootLayoutNav />
-        </BottomSheetModalProvider>
-      </SingleViewContextProvider>
+      <GestureHandlerRootView>
+        <SingleViewContextProvider>
+          <BottomSheetModalProvider>
+            <RootLayoutNav />
+          </BottomSheetModalProvider>
+        </SingleViewContextProvider>
+      </GestureHandlerRootView>
     </ClerkProvider>
   );
 }

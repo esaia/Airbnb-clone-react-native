@@ -4,8 +4,8 @@ import airbnb from "@/assets/data/airbnb-list.json";
 import { AirbnbList } from "@/types/types";
 import { router } from "expo-router";
 import { Marker } from "react-native-maps";
-import MapView from "react-native-map-clustering";
 import AppText from "@/components/typography/AppText";
+import MapView from "react-native-map-clustering";
 
 const INITIAL_REGION = {
   latitude: 52.514191929150456,

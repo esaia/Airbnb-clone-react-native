@@ -1,4 +1,11 @@
-import { Image, Modal, StatusBar, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  Modal,
+  StatusBar,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import airbnb from "@/assets/data/airbnb-list.json";
@@ -50,7 +57,7 @@ const page = () => {
           scale: interpolate(
             scrollOffset.value,
             [-IMAGE_HEIGHT, 0, IMAGE_HEIGHT],
-            [2, 1, 1]
+            [2, 1, 1.3]
           ),
         },
       ],
@@ -61,8 +68,8 @@ const page = () => {
     return {
       opacity: interpolate(
         scrollOffset.value,
-        [IMAGE_HEIGHT / 2, IMAGE_HEIGHT * 0.7, IMAGE_HEIGHT * 2],
-        [0, 1, 1]
+        [IMAGE_HEIGHT / 2, IMAGE_HEIGHT * 0.7],
+        [0, 1]
       ),
     };
   });

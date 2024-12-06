@@ -6,7 +6,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import Animated, { FadeOutDown } from "react-native-reanimated";
 
 const MainHeader = () => {
   const categories = [
