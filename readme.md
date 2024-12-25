@@ -30,7 +30,7 @@ cd Airbnb-clone-react-native
 npm install
 
 # add .env
-EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY
+EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY=your_key
 
 npm run dev
 ```
