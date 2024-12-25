@@ -39,7 +39,9 @@ npm run dev
 
 <br/>
 
-![App Vide Demo](/readme/demo.mp4)
+Watch demo:
+
+[![Watch the video](/readme/video.png)](https://youtube.com/shorts/IldeZgbiOJw?feature=share)
 
 ![App Screenshot](/readme/registration.png)
 
